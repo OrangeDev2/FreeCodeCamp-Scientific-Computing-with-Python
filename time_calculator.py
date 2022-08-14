@@ -1,59 +1,128 @@
-def add_time(start, duration, dayOfTheWeek = "tueSday"):
-  #add_time("11:06 PM", "20:02") -> 1:08 PM
-
-  n = 1 # number of days later
-
-  dayOfTheWeek = dayOfTheWeek.lower()
+def add_time(start, duration, dayOfTheWeek = str()):
+# Returns: 12:03 AM, Thursday (2 days later)
   day = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
-  dayLater = ''
-  
-  startEnding = start.split(':')[1].split()[1]
-  ending = ['AM', 'PM']
+  startHour = int(start.split(":")[0])
+  startMinute = int(start.split(":")[1].split()[0])
+  startEnding = start.split(":")[1].split()[1]
 
-  startHour = int(start.split(':')[0])
-  startMinute = int(start.split(':')[1].split()[0])
+  durationHour = int(duration.split(":")[0])
+  durationMinute = int(duration.split(":")[1])
 
-  durationHour = int(duration.split(':')[0])
-  durationMinute = int(duration.split(':')[1])
+  addedHour = startHour + durationHour
+  addedMinute = startMinute + durationMinute
 
-  resultHour = startHour + durationHour
-  resultMinute = startMinute + durationMinute
+  newHour = int()
+  newMinute = int()
 
-  while resultMinute > 59:
-    resultMinute -= 60
-    resultHour += 1
+  n = int() #number of days
 
-  hourChange = 0
-  
-  while resultHour > 12:
-    resultHour -= 12
-    hourChange += 12
+  dayChange = 0
 
-    if hourChange == 24:
+  n_ending = 0 # count of ending format changes.  AM -> PM -> ...
+
+  while addedHour > 12 or addedMinute >= 60:
+    if addedHour > 12:
+      addedHour -= 12
+      dayChange += 12
+      n_ending += 1
+      
+    if addedMinute >= 60: 
+      addedMinute -= 60
+      addedHour += 1
+
+      if addedHour >= 12: # Example: 11:00 AM -> 12:00 PM, thats 1 count of ending format change
+        n_ending += 1
+      
+
+  if dayChange >= 12 and startEnding == 'PM':
+    n += 1
+    #n_ending += 1
+    while dayChange >= 24:
       n += 1
-      hourChange = 0
-    if startEnding == 'AM':
-      startEnding = 'PM'
-    if startEnding == 'PM':
-      startEnding = 'AM'
+      dayChange -= 24
+  elif dayChange >= 12 and startEnding == 'AM':
+    while dayChange >= 24:
+      n += 1
+      dayChange -= 24
 
+  newHour = str(addedHour)
+  newMinute = str(addedMinute)
+  
+  if addedMinute < 10:
+    newMinute = '0' + str(addedMinute)
+
+  newTime = newHour + ':' + newMinute
+
+  ##############################
+  #print(newTime)
+  #print('n', n)
+  #print('n_ending', n_ending)
+
+  #newEnding = str()
+  newEnding = 'AM'
+  
+  if n_ending % 2 == 0:
+    newEnding = startEnding
+  if n_ending % 2 != 0 and startEnding == 'AM':
+    newEnding = 'PM'
+
+  #print('newEnding', newEnding)
+  
+  dayLater = str()
+
+  result = newTime + ' ' + newEnding
+  
   if n == 1:
     dayLater = '(next day)'
+    result = newTime + ' ' + newEnding + ' ' + dayLater
   if n > 1:
     dayLater = f'({n} days later)'
-
-  index = day.index(dayOfTheWeek)
-  #print(index)
+    result = newTime + ' ' + newEnding + ' ' + dayLater
   
-  for i in range(0, n):
-    print(i)
+  if dayOfTheWeek.lower() in day:
+    dayOfTheWeek = dayOfTheWeek.lower()
+    newDay = dayOfTheWeek[0].upper() + dayOfTheWeek[1:]
 
-  resultTime = str(resultHour) + ':' + str(resultMinute) + ' ' + startEnding + ' ' + dayLater
+    #print('test', newDay, dayOfTheWeek, n)
+
+    if n >= 1:
+      #print('n >= 1 is True')
+      dayIndex = day.index(dayOfTheWeek.lower())
   
-  if resultMinute < 10:
-    resultTime = str(resultHour) + ':0' + str(resultMinute) + ' ' + startEnding + ' ' + dayLater
+      #print('dayIndex', dayIndex)
+  
+      newIndex = dayIndex
 
-  #print(resultTime)
+      n_condition = n
+      i = newIndex
+      
+      while n_condition >= 0:
+        if i > 6:
+          i -= 7
+        #print(i)
+        #print(day[i])
+        newDay = day[i]
+        
+        i += 1
+        n_condition -= 1
+        #for i in range(newIndex , n+2):
+        #  if i > 6:
+        #    i -= 7
+        #  print(i)
+        #newDay = day[i]
+  
+      newDay = newDay[0].upper() + newDay[1:]
+      
+    #print(newDay)
 
-  return new_time
+    result = newTime + ' ' + newEnding + ', ' + newDay + ' ' + dayLater
+    
+    if n == 0:
+      result = newTime + ' ' + newEnding + ', ' + newDay
+
+  #result = result.rstrip()
+  
+  #print(result)
+  
+  return result
