@@ -1,14 +1,17 @@
 class Category:
 
-  someList = []
+  ledger = []
   
   #default constructor
-  def __init__(self, ledger):
-    self.ledger = someList
+  #def __init__(self):
+  #  self.ledger = ledger
 
   def deposit(self, amount, description):
     self.amount = amount
     self.description = description
+
+    print('amount is...', self.amount)
+    print('desicrioptn is...', description)
 
   def withdraw(self, amount, description):
     self.amount = amount
@@ -28,11 +31,11 @@ class Category:
     
 def create_spend_chart(categories):
   # categories -> [food, clothing, auto]
-  print(categories)
+  print('test', categories)
 
 
 # create object of the class
 obj = Category()
 
 # calling the instance method using the object obj
-print(obj.test())
+print(obj.deposit(58198, 'something'))
