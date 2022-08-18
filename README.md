@@ -1,5 +1,6 @@
 # Scientific-Computing-with-Python
 Scientific Computing with Python Projects
+Knowledge required: up to Classes OOP
 
 # Artithetmic Formatter
 
