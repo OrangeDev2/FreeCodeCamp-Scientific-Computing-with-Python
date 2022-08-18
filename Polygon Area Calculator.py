@@ -1,4 +1,4 @@
-class Rectangle:
+class Rectangle():
   width = int()
   height = int()
   rectangle_string = str()
@@ -6,6 +6,9 @@ class Rectangle:
   def __init__(self, width, height):
     self.width = width
     self.height = height
+
+  def __str__(self):
+    return f'Rectangle(width={self.width}, height={self.height})'
     
   def set_width(self, width):
     self.width = width
@@ -27,25 +30,26 @@ class Rectangle:
     n_star = '*'*self.width
     display_picture = ''
     
-    self.rectangle_string = f'Rectangle(width={self.width}, height={self.height})\n'
-    
     if self.width > 50 or self.height > 50:
-      return self.rectangle_string + "Too big for picture."
+      return "Too big for picture."
     else:
       for i in range(0, n_lines):
         display_picture += n_star + "\n"
-      return self.rectangle_string + display_picture
+      return display_picture
     
   def get_amount_inside(self, shape):
-    #if shape == 'rectangle':
-    #  if self.width > self.height:
-    return None
+    return int(self.get_area() / shape.get_area()) # Credit to https://www.youtube.com/watch?v=sMVCsctweh4 for this line. Better than my while loop for subtracting area till 0
 
 
-
-class Square:
+class Square(Rectangle):
   def __init__(self, side_length):
-    print('')
+    self.width = side_length
+    self.height = side_length
 
-  def set_side(self, side)
-    self.side = side
+  def __str__(self):
+    return f'Square(side={self.width})'
+
+  def set_side(self, side):
+    #self.side = side
+    self.width = side
+    self.height = side
