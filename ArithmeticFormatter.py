@@ -1,80 +1,67 @@
-def arithmetic_arranger(problems, displayAnswers = True):
+def arithmetic_arranger(problems, answerDisplay = False):
+  problem = ['', '', '', '']
 
-  answer = ''
-  
-  for firstLine in problems:
-    firstOperand = firstLine.split()[0]
-    secondOperand = firstLine.split()[2]
-    largeOperand = int()
+  # Error 1: that is meaningful to the user.
+  if len(problems) > 5:
+    return 'Error: Too many problems.'
 
-    if firstOperand >= secondOperand:
-      largeOperand = firstOperand
+  for i in range(0, len(problems)):
+    dashes = '-'
+    answer = str()
+
+    # Error 2: that is meaningful to the user.
+    if problems[i].split()[1] != '+' and problems[i].split()[1] != '-': # Return if either + or - doesn't exist.
+      return '''Error: Operator must be '+' or '-'.'''
+
+    # Error 3: that is meaningful to the user.
+    if not problems[i].split()[0].isdigit() or not problems[i].split()[2].isdigit():
+      return '''Error: Numbers must only contain digits.'''
+
+    # Error 4: that is meaningful to the user.
+    if len(problems[i].split()[0]) > 4 or len(problems[i].split()[2]) > 4:
+      return '''Error: Numbers cannot be more than four digits.'''
+      
+    if int(problems[i].split()[0]) >= int(problems[i].split()[2]):
+      dashes *= ( len(problems[i].split()[0]) + 2 )
     else:
-      largeOperand = secondOperand
+      dashes *= ( len(problems[i].split()[2]) + 2 )
 
-    space = ' ' * ( (len(str(largeOperand)) + 2) - len(firstOperand))
-    
-    answer += space + str(firstOperand) + '    '
+    if answerDisplay == True:
+        if problems[i].split()[1] == '+':
+          answer = str( int(problems[i].split()[0]) + int(problems[i].split()[2]) )
+          problem[3] += (' ' * (len(dashes) - len(answer)) ) + answer
+        else:
+          answer += str( int(problems[i].split()[0]) - int(problems[i].split()[2]) )
+          problem[3] += (' ' * (len(dashes) - len(answer)) ) + answer
+          
+    if i != len(problems)-1:
+      problem[0] += ( 
+        (' ' * (len(dashes) - len(problems[i].split()[0])) )
+        + problems[i].split()[0] + '    ')
 
-  answer += '\n'
-  
-  for secondLine in problems:
-    firstOperand = secondLine.split()[0]
-    operator = secondLine.split()[1]
-    secondOperand = secondLine.split()[2]
-    largeOperand = int()
+      problem[1] += ( 
+        problems[i].split()[1] 
+        + ( ' ' * (len(dashes) - len(problems[i].split()[2]) - 1))
+        + problems[i].split()[2] + '    '
+      )
 
-    if firstOperand >= secondOperand:
-      largeOperand = firstOperand
-    else:
-      largeOperand = secondOperand
+      problem[2] += dashes + '    '
 
-    space = ' ' * ( (len(str(largeOperand)) + 2) - len(secondOperand) - len(operator))
-    
-    answer += operator + space + str(secondOperand) + '    '
+      problem[3] += '    '
+        
+    if i == len(problems)-1:
+      problem[0] += ( 
+        (' ' * (len(dashes) - len(problems[i].split()[0])) )
+        + problems[i].split()[0] + '\n')
 
-  answer += '\n'
+      problem[1] += ( 
+        problems[i].split()[1] 
+        + ( ' ' * (len(dashes) - len(problems[i].split()[2]) - 1))
+        + problems[i].split()[2] + '\n'
+      )
 
-  for dashesLine in problems:
-    firstOperand = dashesLine.split()[0]
-    secondOperand = dashesLine.split()[2]
-    largeOperand = int()
+      problem[2] += dashes + '\n'
 
-    if firstOperand >= secondOperand:
-      largeOperand = firstOperand
-    else:
-      largeOperand = secondOperand
-
-    dashes = '-' * (len(str(largeOperand)) + 2)
-    
-    answer += dashes + '    '
-
-  if displayAnswers is True:
-    answer += '\n'
-    
-    for fourthLine in problems:
-      firstOperand = fourthLine.split()[0]
-      operator = fourthLine.split()[1]
-      secondOperand = fourthLine.split()[2]
-      finalAnswer = int()
-      largeOperand = int()
-  
-      if firstOperand >= secondOperand:
-        largeOperand = firstOperand
-      else:
-        largeOperand = secondOperand
-
-      if '+' == operator:
-        finalAnswer = int(firstOperand) + int(secondOperand)
-      if '-' == operator:
-        finalAnswer = int(firstOperand) - int(secondOperand)
-  
-      space = ' ' * ( (len(str(largeOperand)) + 2) - len(str(finalAnswer)))
-    
-      answer += space + str(finalAnswer) + '    '
-    
-  #print(answer)
-
-  arranged_problems = answer
+  arranged_problems = problem[0] + problem[1] + problem[2] + problem[3]
   
   return arranged_problems
