@@ -27,12 +27,14 @@ def arithmetic_arranger(problems, answerDisplay = False):
       dashes *= ( len(problems[i].split()[2]) + 2 )
 
     if answerDisplay == True:
-        if problems[i].split()[1] == '+':
-          answer = str( int(problems[i].split()[0]) + int(problems[i].split()[2]) )
-          problem[3] += (' ' * (len(dashes) - len(answer)) ) + answer
-        else:
-          answer += str( int(problems[i].split()[0]) - int(problems[i].split()[2]) )
-          problem[3] += (' ' * (len(dashes) - len(answer)) ) + answer
+      if problems[i].split()[1] == '+':
+        answer = str( int(problems[i].split()[0]) + int(problems[i].split()[2]) )
+        problem[3] += (' ' * (len(dashes) - len(answer)) ) + answer
+      else:
+        answer += str( int(problems[i].split()[0]) - int(problems[i].split()[2]) )
+        problem[3] += (' ' * (len(dashes) - len(answer)) ) + answer
+
+      problem[3] += '    '
           
     if i != len(problems)-1:
       problem[0] += ( 
@@ -46,8 +48,6 @@ def arithmetic_arranger(problems, answerDisplay = False):
       )
 
       problem[2] += dashes + '    '
-
-      problem[3] += '    '
         
     if i == len(problems)-1:
       problem[0] += ( 
@@ -60,8 +60,11 @@ def arithmetic_arranger(problems, answerDisplay = False):
         + problems[i].split()[2] + '\n'
       )
 
-      problem[2] += dashes + '\n'
+      problem[2] += dashes
+      
+      if answerDisplay == True:
+        problem[2] += '\n'
 
-  arranged_problems = problem[0] + problem[1] + problem[2] + problem[3]
+  arranged_problems = problem[0] +  problem[1] + problem[2] + problem[3].rstrip()
   
   return arranged_problems
