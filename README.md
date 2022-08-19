@@ -4,7 +4,7 @@ Knowledge required: up to Classes OOP
 
 # Artithetmic Formatter
 
-![image](https://user-images.githubusercontent.com/47803678/185375079-dad87ee7-2221-432b-9f9d-723bfd608cdd.png)
+![image](https://user-images.githubusercontent.com/47803678/185599970-629a6367-0250-451e-8440-765c87899538.png)
 
 Correctly formatted but Moving on..
 
