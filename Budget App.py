@@ -17,6 +17,8 @@ class Category():
     
     new_description = json.loads(Category.ledger_list[0])['description'][0:23]
     new_amount = str(json.loads(Category.ledger_list[0])['amount'])[0:7]
+    new_amount = "{:.2f}".format(float(new_amount))
+    
     space = ' ' * (30 - len(new_description) - len(new_amount))
     
     print(new_description + space + new_amount)
@@ -29,11 +31,17 @@ class Category():
 
     new_description = json.loads(Category.ledger_list[0])['description'][0:23]
     new_amount = str(json.loads(Category.ledger_list[0])['amount'])[0:7]
+    new_amount = "{:.2f}".format(float(new_amount))
     space = ' ' * (30 - len(new_description) - len(new_amount))
     
     print(new_description + space + new_amount)
     
     Category.ledger_list.remove(f'{{"amount": {-1 * amount}, "description": "{description}"}}')
+
+    if amount != int():
+      return True
+    else:
+      return False
     
   def get_balance(self):
     print('')
