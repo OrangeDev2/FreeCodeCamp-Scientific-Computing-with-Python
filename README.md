@@ -1,6 +1,6 @@
 # Scientific-Computing-with-Python
 Scientific Computing with Python Projects
-Knowledge required: funamentals and OOP.  dir() and help() are helpful.
+Knowledge required: funamentals and OOP.  dir() and help() are helpful.  json module is great for Budget App
 
 # Artithetmic Formatter
 Output: 10/10 Tests passed
